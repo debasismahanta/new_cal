@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <style>
+        body{
+            background-color: rgb(196, 196, 205);
+        }
+        .head{
+            text-align: center;
+            background-color: rgb(189, 231, 244);
+            padding: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        function AmountChange(){
+            document.getElementById("txtAmount").value = document.getElementById("rangeAmount").value;
+        }
+        function YearChange(){
+            document.getElementById("txtYears").value = document.getElementById("rangeYear").value;
+        }
+        function RateChange(){
+            document.getElementById("txtRate").value = document.getElementById("rangeRate").value;
+        }
+        function CalculateClick(){
+             var p = parseInt(document.getElementById("txtAmount").value);
+             var n = parseInt(document.getElementById("txtYears").value) * 12;
+             var r = parseInt(document.getElementById("txtRate").value)/12/100;
+
+            //  The formula to calculate EMI is P x R x (1+R)^N / [(1+R)^N-1]
+             var emi = p * r * Math.pow((1+r),n) / Math.pow((1+r),n)-1;
+
+             document.getElementById("result").innerHTML = "Your monthly installment amount is &#8377;" + Math.round(emi) + " for " + (n/12) + " years with " + document.getElementById("txtRate").value + "% interest rate.";
+        }
+    </script>
+</head>
+<body class="container-fluid">
+    <h2 class="head">Personal Loan EMI Calculator</h2>
+    <div style="box-shadow: 2px 2px 3px gray; padding: 20px;">
+        <div class="row mt-3">
+            <div class="col">
+                Amount you need &#8377;<input type="text" id="txtAmount" size="15">
+            </div>
+            <div class="col">
+                for <input type="text" id="txtYears" size="2"> years
+            </div>
+            <div class="col">
+                Interest rate <input type="text" id="txtRate" size="4"> %
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <div class="input-group">
+                    <span>&#8377; 50,000</span><div><input class="form-range mx-2" min="50000" max="1000000" value="50000" type="range" onchange="AmountChange()" id="rangeAmount"></div> <span class="ms-2">&#8377; 10,00,000</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group">
+                    <span>1</span><div><input class="form-range mx-2" min="1" max="5" value="1" type="range" onchange="YearChange()" id="rangeYear"></div> <span class="ms-2">5</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group">
+                    <span>8.45%</span><div><input class="form-range mx-2" min="8.45" max="20.45" value="8.45" type="range" onchange="RateChange()" id="rangeRate"></div><span class="ms-2">20.45%</span>
+                </div>
+            </div>
+        </div>                  
+        <div class="col mt-4">
+            <div class="col text-end">
+                <button onclick="CalculateClick()" class="btn btn-primary">Calculate</button>
+            </div>
+        </div>
+    </div>
+    <h3 class="text-center" id="result">
+        
+    </h3>    
+</body>
+</html>
